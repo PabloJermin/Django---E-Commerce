@@ -24,5 +24,6 @@ urlpatterns = [
     path('item/', include('item.urls'), name='detail'),
     path('', include('Spice.urls')),
     path('admin/', admin.site.urls),
+    path('dashboard/', include('Dashboard.urls')),
 ]
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

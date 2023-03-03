@@ -28,3 +28,5 @@ def signup(request):
 
     context= {'form': form }
     return render(request, 'Spice/signup.html', context)
+
+
