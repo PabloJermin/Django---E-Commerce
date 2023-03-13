@@ -1,7 +1,25 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Item
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from .models import Item, Category
 from .forms import NewItemForm, EditItemForm
+
+
+def browse(request):
+    query = request.GET.get('query', '')
+    items = Item.objects.filter(is_sold=False)
+    categories = Category.objects.all()
+    
+    # scannig through the search name
+    if query:
+        items = items.filter(Q(name__icontains = query) | Q(description__icontains = query))
+    return render(request, 'item/browse.html', {
+        'items': items,
+        'query': query,
+        'categories': categories,
+        # 'category_id': int(category_id),
+    })
+
 
 def detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
@@ -56,3 +74,4 @@ def edit(request, pk):
         'form': form,
         'title': 'Edit Item',   
     })
+    
